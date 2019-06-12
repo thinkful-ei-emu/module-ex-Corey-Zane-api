@@ -33,7 +33,7 @@ const api = (function(){
       body:jsonUpdate
     });
   };
-  
+
 
   return {
     getItems,
