@@ -8,7 +8,18 @@ $(document).ready(function() {
 
 store.items.push(Item.create('apples'));
 
-//api.getItems()
+
+api.createItem('no more pears')
+  .then(res => res.json())
+  .then((newItem) => {
+    return api.getItems();
+  })
+  .then(res => res.json())
+  .then((items) => {
+    console.log(items);
+  });
+
+// api.getItems()
 // .then(response=>response.json())
 // .then(responseJson=>
 //   console.log(responseJson))
@@ -16,4 +27,4 @@ store.items.push(Item.create('apples'));
 //   alert(`There has been and error please try again later${error.message}`));
 
 
-//console.log(api.BASE_URL);
+// console.log(api.BASE_URL);
