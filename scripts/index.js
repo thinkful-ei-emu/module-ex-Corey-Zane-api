@@ -8,7 +8,12 @@ $(document).ready(function() {
 
 store.items.push(Item.create('apples'));
 
-api.getItems()
-  .then(res => console.log(res));
+//api.getItems()
+// .then(response=>response.json())
+// .then(responseJson=>
+//   console.log(responseJson))
+// .catch(error=>
+//   alert(`There has been and error please try again later${error.message}`));
 
-console.log(api.BASE_URL);
+
+//console.log(api.BASE_URL);
