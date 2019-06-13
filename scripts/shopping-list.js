@@ -4,6 +4,19 @@
 // eslint-disable-next-line no-unused-vars
 const shoppingList = (function(){
 
+  
+  function generateError(message) {
+    return `
+      <section class="error-content">
+        <button id="cancel-error">X</button>
+        <p>${message}</p>
+      </section>
+    `;
+  }
+  
+  
+  
+  
   function generateItemElement(item) {
     const checkedClass = item.checked ? 'shopping-item__checked' : '';
     const editBtnStatus = item.checked ? 'disabled' : '';
@@ -39,9 +52,19 @@ const shoppingList = (function(){
     const items = shoppingList.map((item) => generateItemElement(item));
     return items.join('');
   }
+
+  function renderError() {
+    if (store.error) {
+      const el = generateError(store.error);
+      $('.error-container').html(el);
+    } else {
+      $('.error-container').empty();
+    }
+  }
   
   
   function render() {
+    renderError();
     // Filter item list if store prop is true by item.checked === false
     let items = [ ...store.items ];
     if (store.hideCheckedItems) {
@@ -60,6 +83,8 @@ const shoppingList = (function(){
     // insert that HTML into the DOM
     $('.js-shopping-list').html(shoppingListItemsString);
   }
+
+  
   
   
   function handleNewItemSubmit() {
@@ -71,7 +96,6 @@ const shoppingList = (function(){
         throw new TypeError('errrrrrrrrrrrrr');
       }
       api.createItem(newItemName)
-        .then(res => res.json())
         .then((newItem) => {
           store.addItem(newItem);
           render();
@@ -115,11 +139,8 @@ const shoppingList = (function(){
       const id = getItemIdFromElement(event.currentTarget);
       const newName = $(event.currentTarget).find('.shopping-item').val();
       const updateData={name:newName};
-      api.updateItem(id,updateData)
-        .then(data=>data.json());
+      api.updateItem(id,updateData);
       store.findAndUpdate(id,updateData);
-      console.log(updateData);
-      console.log(id);
       store.setItemIsEditing(id, false);
       render();
     });
