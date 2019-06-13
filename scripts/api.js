@@ -20,7 +20,6 @@ const api = (function(){
     
   };
    
-
   const updateItem=function(id,updateData){
     const jsonUpdate=JSON.stringify(
       updateData
@@ -30,15 +29,21 @@ const api = (function(){
       headers:{
         'Content-Type': 'application/json'
       },
-      body:jsonUpdate
+      body: jsonUpdate
     });
   };
 
+  const deleteItem = function (id) {
+    return fetch(`${BASE_URL}/items/${id}`, {
+      method: 'DELETE'
+    });
+  };
 
   return {
     getItems,
     createItem,
-    updateItem
+    updateItem,
+    deleteItem
   };
 
 })();
